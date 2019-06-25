@@ -20,6 +20,11 @@ public class Servlet {
         //把参数封装成一个user对象
         //userDao.save(user);
         String username = paramaters.get("username");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         response.write("  hello "+username+"!  you signup successfully! wish you lol everyDay~");
     }
 }

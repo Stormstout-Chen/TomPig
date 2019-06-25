@@ -28,9 +28,7 @@ public class Request {
                     paramaters.put(split[0],split[1]);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
     }
 
     public InputStream getInputStream() {

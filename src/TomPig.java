@@ -3,14 +3,24 @@ import req_res.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
+import java.util.concurrent.*;
 
 
 public class TomPig {
 
-    private  int port = 8080;
+    static private Properties properties;
+    static private int port = 8080;
+    static ExecutorService pool;
 
-    public TomPig(int port) {
-        this.port = port;
+    static {
+        InputStream inputStream = TomPig.class.getClassLoader().getResourceAsStream("kate.properties");
+        properties = new Properties();
+        try {
+            properties.load(inputStream);
+        } catch(IOException e){e.printStackTrace();}
+        port = Integer.valueOf(properties.getProperty("serverPort"));
+        pool = Executors.newFixedThreadPool(Integer.valueOf(properties.getProperty("initSize")));
     }
 
     public void start(){
@@ -19,14 +29,26 @@ public class TomPig {
 
             while (true){
                 Socket socket = serverSocket.accept();
-                InputStream inputStream = socket.getInputStream();
-                OutputStream outputStream = socket.getOutputStream();
 
-                Request request = new Request(inputStream);
-                Response response = new Response(outputStream);
+                Runnable thread = new Runnable() {
+                    @Override
+                    public void run() {
+                        InputStream inputStream = null;
+                        try {
+                            inputStream = socket.getInputStream();
+                            OutputStream outputStream = socket.getOutputStream();
 
-                Servlet servlet = new Servlet(request, response);
-                servlet.doGet();
+                            Request request = new Request(inputStream);
+                            Response response = new Response(outputStream);
+
+                            Servlet servlet = new Servlet(request, response);
+                            servlet.doGet();
+                            socket.close();
+                        } catch (IOException e){e.printStackTrace();}
+                    }
+                };
+
+                pool.execute(thread);
             }
 
         } catch (IOException e) {

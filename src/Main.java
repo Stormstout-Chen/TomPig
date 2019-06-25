@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         //启动我们的TomPig服务器,然后就可以在浏览器里访问这个猪册项目啦
         //测试url:
-        TomPig tomPig = new TomPig(8081);
+        TomPig tomPig = new TomPig();
         tomPig.start();
     }
 }
