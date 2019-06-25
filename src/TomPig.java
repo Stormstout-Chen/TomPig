@@ -11,7 +11,7 @@ public class TomPig {
 
     static private Properties properties;
     static private int port = 8080;
-    static ExecutorService pool;
+    static ExecutorService pool;//内置的线程池 线程池大小决定了TomPig能处理的最高并发数
 
     static {
         InputStream inputStream = TomPig.class.getClassLoader().getResourceAsStream("kate.properties");
