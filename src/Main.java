@@ -5,6 +5,6 @@ public class Main {
         //启动我们的TomPig服务器,然后就可以在浏览器里访问这个猪册项目啦
         //测试url: localhost:8080/user/login?username=pan_pan&password=66666
         TomPig tomPig = new TomPig();
-        tomPig.start();
+        tomPig.run();
     }
 }
