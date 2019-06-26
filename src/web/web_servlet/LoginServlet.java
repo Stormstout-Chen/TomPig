@@ -15,8 +15,7 @@ public class LoginServlet extends Servlet {
     @Override
     public void doGet() {
         Map<String, String> paramaters = request.getParamaters();
-        //把参数封装成一个user对象
-        //userDao.save(user);
+        //登录的逻辑
         String username = paramaters.get("username");
         response.write("  hello "+username+"! login successful!");
     }

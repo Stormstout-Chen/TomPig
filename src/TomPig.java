@@ -1,14 +1,10 @@
 import lib.*;
-import web.web_servlet.*;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.*;
 
 
@@ -58,10 +54,9 @@ public class TomPig {
                 Runnable thread = new Runnable() {
                     @Override
                     public void run() {
-                        InputStream inputStream = null;
                         try {
                             //获取输入和输出流
-                            inputStream = socket.getInputStream();
+                            InputStream inputStream = socket.getInputStream();
                             OutputStream outputStream = socket.getOutputStream();
 
                             //封装Request和Response对象
